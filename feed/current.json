@@ -1,0 +1,33 @@
+{
+  "season": 2026,
+  "date": "2026-09-19",
+  "status": "SEED_PRIOR",
+  "card_type": "player_props",
+  "generated_at": "2026-09-19T01:20:00Z",
+  "timezone": "America/Chicago",
+  "disclaimer": "First MLB Desk card. Friday leftovers + Saturday slate. Seed priors vs published K/HR/TB lines. Re-price at lineup lock.",
+  "source": "mlb-desk",
+  "feed_version": 1,
+  "notes": "Regular season ends Sep 27. Watch September pitch counts more than ERA.",
+  "games": [
+    {"id": "2026-09-18_NYY_ARI", "when": "Fri 9:40p", "away": "NYY", "home": "ARI"},
+    {"id": "2026-09-18_SF_LAD", "when": "Fri 10:15p", "away": "SF", "home": "LAD"},
+    {"id": "2026-09-19_DET_CWS", "when": "Sat 2:10p", "away": "DET", "home": "CWS"},
+    {"id": "2026-09-19_BOS_TB", "when": "Sat 4:10p", "away": "BOS", "home": "TB"},
+    {"id": "2026-09-19_SEA_COL", "when": "Sat 8:10p", "away": "SEA", "home": "COL"},
+    {"id": "2026-09-19_NYY_ARI", "when": "Sat 8:10p", "away": "NYY", "home": "ARI"},
+    {"id": "2026-09-19_SF_LAD", "when": "Sat 9:10p", "away": "SF", "home": "LAD"}
+  ],
+  "props": [
+    {"id": "fri_cole_k", "game_id": "2026-09-18_NYY_ARI", "when": "Fri 9:40p", "player": "Gerrit Cole", "team": "NYY", "opp": "ARI", "pos": "SP", "market": "k", "market_label": "Strikeouts", "line": 4.5, "book": "FanDuel", "price": -122, "proj": 5.6, "sigma": 1.8, "p_over": 0.73, "edge": 1.1, "play": "WATCH", "units": 0, "note": "4.5 is soft vs 5.8 K/start. Confirm he is still on the mound."},
+    {"id": "fri_judge_hr", "game_id": "2026-09-18_NYY_ARI", "when": "Fri 9:40p", "player": "Aaron Judge", "team": "NYY", "opp": "ARI", "pos": "OF", "market": "hr", "market_label": "Home run", "line": 0.5, "book": "Kalshi", "price": 306, "proj": 0.21, "sigma": null, "p_over": 0.21, "edge": null, "play": "WATCH", "units": 0, "note": "~21% model. Needs +300 or longer. Binary. Never 1u."},
+    {"id": "fri_glasnow_k", "game_id": "2026-09-18_SF_LAD", "when": "Fri 10:15p", "player": "Tyler Glasnow", "team": "LAD", "opp": "SF", "pos": "SP", "market": "k", "market_label": "Strikeouts", "line": 6.5, "book": "FanDuel", "price": -148, "proj": 6.2, "sigma": 1.8, "p_over": 0.43, "edge": -0.3, "play": "PASS", "units": 0, "note": "Juice on 6.5 is the story. Shop the under +116."},
+    {"id": "sat_skubal_k", "game_id": "2026-09-19_SF_LAD", "when": "Sat 9:10p", "player": "Tarik Skubal", "team": "LAD", "opp": "SF", "pos": "SP", "market": "k", "market_label": "Strikeouts", "line": 6.5, "book": "seed", "price": -115, "proj": 7.4, "sigma": 1.8, "p_over": 0.69, "edge": 0.9, "play": "WATCH", "units": 0, "note": "Confirm Saturday starter. If Skubal is up, shop 6.5."},
+    {"id": "sat_webb_k", "game_id": "2026-09-19_SF_LAD", "when": "Sat 9:10p", "player": "Logan Webb", "team": "SF", "opp": "LAD", "pos": "SP", "market": "k", "market_label": "Strikeouts", "line": 5.5, "book": "seed", "price": -110, "proj": 5.3, "sigma": 1.8, "p_over": 0.46, "edge": -0.2, "play": "PASS", "units": 0, "note": "GB pitcher. K overs vs LAD are a grind."},
+    {"id": "sat_aroz_hrr", "game_id": "2026-09-19_SEA_COL", "when": "Sat 8:10p", "player": "Randy Arozarena", "team": "SEA", "opp": "COL", "pos": "OF", "market": "hrr", "market_label": "Hits+runs+RBI", "line": 2.5, "book": "seed", "price": 110, "proj": 3.1, "sigma": 1.2, "p_over": 0.69, "edge": 0.6, "play": "WATCH", "units": 0, "note": "Coors combo stat, not a HR dart. Confirm lineup."},
+    {"id": "sat_judge_hr", "game_id": "2026-09-19_NYY_ARI", "when": "Sat 8:10p", "player": "Aaron Judge", "team": "NYY", "opp": "ARI", "pos": "OF", "market": "hr", "market_label": "Home run", "line": 0.5, "book": "seed", "price": 290, "proj": 0.2, "sigma": null, "p_over": 0.2, "edge": null, "play": "WATCH", "units": 0, "note": "Same series. Only if price is longer than model. See moonshot-hr."},
+    {"id": "sat_peralta_k", "game_id": "2026-09-19_BOS_TB", "when": "Sat 4:10p", "player": "Freddy Peralta", "team": "TB", "opp": "BOS", "pos": "SP", "market": "k", "market_label": "Strikeouts", "line": 5.5, "book": "seed", "price": -120, "proj": 6.1, "sigma": 1.8, "p_over": 0.63, "edge": 0.6, "play": "WATCH", "units": 0, "note": "Confirm he starts. BOS K rate vs RHP is the feature."},
+    {"id": "sat_degrom_k", "game_id": "2026-09-20_TOR_TEX", "when": "Sun 2:35p", "player": "Jacob deGrom", "team": "TEX", "opp": "TOR", "pos": "SP", "market": "k", "market_label": "Strikeouts", "line": 6.5, "book": "seed", "price": -110, "proj": 7.2, "sigma": 1.8, "p_over": 0.65, "edge": 0.7, "play": "WATCH", "units": 0, "note": "Sunday hold. Do not bet Saturday night."},
+    {"id": "sat_tork_hr", "game_id": "2026-09-19_DET_CWS", "when": "Sat 2:10p", "player": "Spencer Torkelson", "team": "DET", "opp": "CWS", "pos": "1B", "market": "hr", "market_label": "Home run", "line": 0.5, "book": "seed", "price": 380, "proj": 0.16, "sigma": null, "p_over": 0.16, "edge": null, "play": "PASS", "units": 0, "note": "Needs Saturday starter first."}
+  ]
+}

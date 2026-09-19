@@ -1,5 +1,101 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="utf-8" />
-<title>MLB Desk</title>
-<script>location.replace("https://htmlpreview.github.io/?https://github.com/SpaceCooler94/nfl-desk/blob/main/web/index.html?sport=mlb");</script>
-<p><a href="https://htmlpreview.github.io/?https://github.com/SpaceCooler94/nfl-desk/blob/main/web/index.html?sport=mlb">Open MLB Desk board</a></p>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Game Sheet</title>
+<style>
+:root{--bg:#0b0d12;--card:#12151c;--ink:#f4f6fb;--mute:#9aa3b2;--line:#232833;--pink:#ff2d7b;--good:#3DDC97;--bad:#ff6b6b;}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.4 ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+.wrap{max-width:920px;margin:0 auto;padding:22px 18px 48px}
+.kicker{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.kicker-l{font-size:11px;letter-spacing:.12em;color:var(--mute);font-weight:700}
+.kicker-l b{background:#1b1f28;color:#fff;padding:3px 7px;border-radius:4px;margin-right:8px}
+.logo{font-weight:800;font-size:22px;letter-spacing:-.04em}.logo span{color:var(--pink)}
+h1{font-size:34px;line-height:1.05;margin:10px 0 6px;letter-spacing:-.03em}
+.meta{color:var(--mute);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.teams{display:grid;grid-template-columns:1fr 52px 1fr;margin:18px 0 12px;border-radius:10px;overflow:hidden}
+.side{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.side.away{background:linear-gradient(90deg,#08363c,#0f4b52)}
+.side.home{background:linear-gradient(90deg,#8a3414,#c24a18);text-align:right;flex-direction:row-reverse}
+.side .lab{font-size:10px;letter-spacing:.14em;opacity:.8}.side .nm{font-size:22px;font-weight:800}
+.side .imp{font-size:11px;opacity:.85;margin-top:2px}
+.at{display:grid;place-items:center;background:#0b0d12;font-weight:800;letter-spacing:.12em}
+.pills{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px}
+.pill{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 10px;text-align:center}
+.pill .k{font-size:10px;color:var(--mute);letter-spacing:.12em}.pill .v{font-size:15px;font-weight:800;margin-top:4px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 14px 8px;margin-bottom:12px}
+.ph{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.ph h2{margin:0;font-size:13px;letter-spacing:.08em}
+.ph h2:before{content:"";display:inline-block;width:3px;height:12px;background:var(--pink);margin-right:8px;vertical-align:-1px}
+.ph .r{font-size:11px;color:var(--mute)}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:10px;color:var(--mute);letter-spacing:.1em;padding:6px 8px}
+td{padding:10px 8px;border-top:1px solid var(--line)}
+th.num,td.num{text-align:right;font-variant-numeric:tabular-nums}
+.who{display:flex;gap:10px;align-items:center}
+.dot{width:22px;height:22px;border-radius:50%;background:#1d222c;display:grid;place-items:center;font-size:9px;font-weight:800}
+.pn{font-weight:700}.ps{font-size:11px;color:var(--mute)}
+.gap.pos{color:var(--good);font-weight:700}.gap.neg{color:var(--bad);font-weight:700}
+.grade{font-weight:800;color:var(--pink)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:720px){.pills,.cols{grid-template-columns:1fr}.teams{grid-template-columns:1fr}.at{display:none}}
+.mrow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 4px;border-top:1px solid var(--line)}
+.badge{min-width:34px;text-align:center;font-weight:800;font-size:13px;padding:4px 6px;border-radius:6px}
+.badge.g{background:#14351f;color:#3DDC97}.badge.y{background:#3a3210;color:#e8c547}.badge.r{background:#3a1515;color:#ff6b6b}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0}
+.nav button,.nav a{background:#12151c;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font:12px/1 system-ui;cursor:pointer;text-decoration:none}
+.nav button.on,.nav a.on{border-color:#ff2d7b;color:#fff}
+.foot{display:flex;justify-content:space-between;color:var(--mute);font-size:11px;margin-top:10px}.foot b{color:var(--pink)}.err{color:var(--bad)}
+</style></head>
+<body>
+<div class="wrap">
+  <div class="kicker"><div class="kicker-l"><b id="weektag">WEEK</b> <span id="sporttag">GAME SHEET</span></div><div class="logo"><span>x</span>DESK</div></div>
+  <div class="nav" id="sports"></div>
+  <div class="nav" id="games"></div>
+  <h1 id="title">Loading</h1>
+  <div class="meta" id="when"></div>
+  <div class="teams" id="banner"></div>
+  <div class="pills" id="pills"></div>
+  <div class="panel"><div class="ph"><h2>PROPS AT A GLANCE</h2><div class="r">PROJ VS LINE</div></div>
+    <table><thead><tr><th>PLAYER</th><th class="num">PROJ</th><th class="num">LINE</th><th class="num">GAP</th><th class="num">GRADE</th></tr></thead><tbody id="props"></tbody></table>
+  </div>
+  <div class="panel"><div class="ph"><h2>KEY LOOKS</h2><div class="r">GAP · PLAY TAG</div></div><div class="cols" id="looks"></div></div>
+  <div class="foot"><div><b>desk</b> · research</div><div id="stamp"></div></div>
+</div>
+<script>
+const FEEDS={nfl:"https://raw.githubusercontent.com/SpaceCooler94/nfl-desk/main/feed/current.json",mlb:"https://raw.githubusercontent.com/SpaceCooler94/mlb-desk/main/feed/current.json"};
+const NFLN={DET:"LIONS",BUF:"BILLS",CAR:"PANTHERS",ATL:"FALCONS",MIN:"VIKINGS",CHI:"BEARS",PHI:"EAGLES",TEN:"TITANS",PIT:"STEELERS",NE:"PATRIOTS",GB:"PACKERS",NYJ:"JETS",CLE:"BROWNS",TB:"BUCCANEERS",NO:"SAINTS",BAL:"RAVENS",CIN:"BENGALS",HOU:"TEXANS",JAX:"JAGUARS",DEN:"BRONCOS",LV:"RAIDERS",LAC:"CHARGERS",MIA:"DOLPHINS",SF:"49ERS",SEA:"SEAHAWKS",ARI:"CARDINALS",WSH:"COMMANDERS",DAL:"COWBOYS",IND:"COLTS",KC:"CHIEFS",NYG:"GIANTS",LAR:"RAMS"};
+const MLBN={NYY:"YANKEES",LAD:"DODGERS",SF:"GIANTS",SD:"PADRES",COL:"ROCKIES",TEX:"RANGERS",TOR:"BLUE JAYS",BOS:"RED SOX",TB:"RAYS",CWS:"WHITE SOX",DET:"TIGERS",MIL:"BREWERS",BAL:"ORIOLES",CHC:"CUBS",CIN:"REDS",ATL:"BRAVES",HOU:"ASTROS",WSH:"NATIONALS",STL:"CARDINALS",MIN:"TWINS",LAA:"ANGELS",MIA:"MARLINS",ARI:"D-BACKS",PHI:"PHILLIES",NYM:"METS",CLE:"GUARDIANS",KC:"ROYALS",PIT:"PIRATES",SEA:"MARINERS",ATH:"ATHLETICS"};
+const state={sport:new URLSearchParams(location.search).get("sport")==="nfl"?"nfl":"mlb",card:null,gid:null};
+function nameOf(ab){return (state.sport==="mlb"?MLBN:NFLN)[ab]||ab||"";}
+function grade(p){const z=p.sigma?Math.abs(Number(p.edge)||0)/Number(p.sigma):Math.abs(Number(p.edge)||0);if(p.play==="OVER"||p.play==="UNDER")return"A";if(p.play==="WATCH"&&z>=0.45)return"A-";if(p.play==="WATCH")return"B+";return"C";}
+function fmt(n){if(n==null||Number.isNaN(Number(n)))return"—";const v=Number(n);return (v>0?"+":"")+v.toFixed(1);}
+function gamesFrom(card){const map=new Map();(card.games||[]).forEach(g=>map.set(g.id||(g.away+"_"+g.home),g));(card.props||[]).forEach(p=>{const id=p.game_id||"na";if(!map.has(id))map.set(id,{id,away:p.team,home:p.opp,when:p.when});});return [...map.values()];}
+function propsFor(gid){return (state.card.props||[]).filter(p=>!gid||p.game_id===gid);}
+function render(){
+  const c=state.card, games=gamesFrom(c);
+  if(!state.gid) state.gid=games[0]&&games[0].id;
+  const g=games.find(x=>(x.id||(x.away+"_"+x.home))===state.gid)||games[0]||{};
+  const rows=propsFor(g.id).slice().sort((a,b)=>Math.abs(b.edge||0)-Math.abs(a.edge||0));
+  document.getElementById("weektag").textContent=c.week?("WEEK "+c.week):(c.date||"").slice(5);
+  document.getElementById("sporttag").textContent=(state.sport==="mlb"?"MLB":"NFL")+" · GAME SHEET";
+  document.getElementById("title").textContent=nameOf(g.away)+" AT "+nameOf(g.home);
+  document.getElementById("when").textContent=[g.when||"",g.tv||"",g.venue||g.park||""].filter(Boolean).join(" · ");
+  const ai=g.away_implied!=null?("IMPLIED "+g.away_implied):(g.away_sp||"");
+  const hi=g.home_implied!=null?("IMPLIED "+g.home_implied):(g.home_sp||"");
+  document.getElementById("banner").innerHTML=`<div class="side away"><div><div class="lab">AWAY</div><div class="nm">${nameOf(g.away)}</div><div class="imp">${ai}</div></div><div class="dot">${g.away||""}</div></div><div class="at">AT</div><div class="side home"><div><div class="lab">HOME</div><div class="nm">${nameOf(g.home)}</div><div class="imp">${hi}</div></div><div class="dot">${g.home||""}</div></div>`;
+  document.getElementById("pills").innerHTML=state.sport==="nfl"?pill("SPREAD",g.spread||"—")+pill("TOTAL",g.total||"—")+pill("KICKOFF",g.when||"—")+pill("ROOF",g.roof||"—"):pill("AWAY SP",g.away_sp||"—")+pill("HOME SP",g.home_sp||"—")+pill("PARK",g.park||"—")+pill("FIRST PITCH",g.when||"—");
+  document.getElementById("props").innerHTML=rows.map(p=>`<tr><td><div class="who"><div class="dot">${p.team||""}</div><div><div class="pn">${p.player}</div><div class="ps">${p.pos||""} · ${p.market_label||p.market}</div></div></div></td><td class="num">${p.proj??"—"}</td><td class="num">${p.line??"—"}</td><td class="num gap ${Number(p.edge)>=0?"pos":"neg"}">${fmt(p.edge)}</td><td class="num grade">${grade(p)}</td></tr>`).join("")||`<tr><td colspan="5" class="ps">No props for this game</td></tr>`;
+  document.getElementById("looks").innerHTML=col(g.home,rows.filter(p=>p.team===g.home))+col(g.away,rows.filter(p=>p.team===g.away));
+  document.getElementById("stamp").textContent=(c.generated_at||"")+" · "+(c.status||"");
+  document.getElementById("sports").innerHTML=`<a href="?sport=nfl" class="${state.sport==="nfl"?"on":""}">NFL</a><a href="?sport=mlb" class="${state.sport==="mlb"?"on":""}">MLB</a><button id="reload">Reload</button>`;
+  document.getElementById("reload").onclick=()=>load();
+  document.getElementById("games").innerHTML=games.map(x=>{const id=x.id||(x.away+"_"+x.home);return `<button data-g="${id}" class="${id===state.gid?"on":""}">${x.away} @ ${x.home}</button>`;}).join("");
+  document.querySelectorAll("#games button").forEach(b=>b.onclick=()=>{state.gid=b.dataset.g;render();});
+}
+function pill(k,v){return `<div class="pill"><div class="k">${k}</div><div class="v">${v}</div></div>`;}
+function col(team,rows){const body=rows.slice(0,4).map(p=>{const z=Math.abs(Number(p.edge)||0);const cls=(p.sigma&&z/p.sigma>=0.6)||z>=12?"g":z>=6?"y":"r";const score=p.p_over!=null?Math.round(Number(p.p_over)*100):Math.min(99,Math.round(50+z));return `<div class="mrow"><div><div class="pn">${p.player}</div><div class="ps">${p.market_label||p.market} · ${p.play}</div></div><div class="badge ${cls}">${score}</div></div>`;}).join("")||`<div class="ps">No tagged looks</div>`;return `<div><div class="ps" style="padding:4px">${team||""} LOOKS</div>${body}</div>`;}
+async function load(){const res=await fetch(FEEDS[state.sport]+"?t="+Date.now());if(!res.ok)throw new Error("feed "+res.status);state.card=await res.json();state.gid=null;render();}
+load().catch(e=>{document.getElementById("title").textContent="Feed failed";document.getElementById("when").innerHTML=`<span class="err">${e.message}</span>`;});
+</script></body></html>

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MLB Desk card",
+  "type": "object",
+  "required": ["season", "date", "status", "card_type", "props"],
+  "properties": {
+    "season": { "type": "integer" },
+    "date": { "type": "string" },
+    "status": { "enum": ["SEED_PRIOR", "LIVE", "LOCKED", "GRADED"] },
+    "card_type": { "const": "player_props" },
+    "games": { "type": "array" },
+    "props": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "player", "team", "market", "play"],
+        "properties": {
+          "market": {
+            "enum": ["k", "outs", "hits", "tb", "hr", "hrr", "sb", "rbi", "runs"]
+          },
+          "play": { "enum": ["OVER", "UNDER", "WATCH", "PASS"] }
+        }
+      }
+    }
+  }
+}

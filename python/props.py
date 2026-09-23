@@ -1,6 +1,6 @@
 """Seed MLB prop math. Volume x opponent x park. Not a live book."""
 
-from math import erf, sqrt
+from math import erf, floor, sqrt
 
 SIGMA = {
     "k": 1.8,
@@ -31,3 +31,10 @@ def play(proj, line, market, juice=-110):
     if juice <= -130 and abs(edge) < 0.7 * s:
         return "PASS"
     return "WATCH"
+
+
+def half_line(x: float) -> float:
+    """Nearest n.5. Ties (exactly n.0) go down to (n-0.5)."""
+    lo = float(floor(x - 0.5)) + 0.5
+    hi = lo + 1.0
+    return lo if abs(x - lo) <= abs(x - hi) else hi

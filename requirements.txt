@@ -1,0 +1,2 @@
+# Card builder is stdlib only (urllib + json).
+# Keep this file so the NFL-desk install step pattern still works.

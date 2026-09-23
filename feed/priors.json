@@ -1,0 +1,5 @@
+{
+  "league_k9": 8.5,
+  "league_ip_gs": 5.3,
+  "note": "Park K factors and roof list live in python/build_day.py. This file is a desk note, not loaded yet."
+}

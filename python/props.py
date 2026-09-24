@@ -5,11 +5,35 @@ from math import erf, floor, sqrt
 SIGMA = {
     "k": 1.8,
     "outs": 3.5,
-    "hits": 0.7,
-    "tb": 1.1,
+    "hits": 0.75,
+    "tb": 1.15,
+    "hr": 0.35,
     "hrr": 1.2,
-    "rbi": 0.9,
-    "runs": 0.7,
+    "rbi": 0.95,
+    "runs": 0.75,
+    "sb": 0.4,
+}
+
+# Expected plate appearances by batting-order slot (league average start).
+PA_BY_SLOT = {
+    1: 4.60,
+    2: 4.48,
+    3: 4.36,
+    4: 4.24,
+    5: 4.12,
+    6: 4.00,
+    7: 3.88,
+    8: 3.76,
+    9: 3.64,
+}
+
+LEAGUE = {
+    "avg": 0.245,
+    "slg": 0.400,
+    "hr_pa": 0.031,
+    "k9": 8.5,
+    "ip_gs": 5.3,
+    "era": 4.15,
 }
 
 
@@ -25,7 +49,9 @@ def play(proj, line, market, juice=-110):
     edge = proj - line
     s = SIGMA.get(market, 1.0)
     if market == "hr":
-        return "WATCH" if proj >= 0.18 else "PASS"
+        if proj >= 0.28:
+            return "WATCH"
+        return "PASS"
     if abs(edge) < 0.45 * s:
         return "PASS"
     if juice <= -130 and abs(edge) < 0.7 * s:

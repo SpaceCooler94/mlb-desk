@@ -2,13 +2,9 @@ name: daily-card
 
 on:
   schedule:
-    # 08:30 CT — morning slate + probable SPs + Savant refresh
     - cron: "30 13 * * *"
-    # 11:30 CT — noon card (LIVE if starters are named)
     - cron: "30 16 * * *"
-    # 18:30 CT — lock remaining first pitches
     - cron: "30 23 * * *"
-    # 01:30 CT — grade last night's boxes + append history
     - cron: "30 6 * * *"
   workflow_dispatch:
     inputs:
@@ -62,7 +58,7 @@ jobs:
           PHASE="${{ inputs.phase }}"
           if [ -z "$PHASE" ]; then PHASE=auto; fi
           if [ "${{ inputs.fresh }}" = "true" ]; then EXTRA="$EXTRA --fresh"; fi
-          python build_day.py --phase "$PHASE" $EXTRA
+          python run_card.py --phase "$PHASE" $EXTRA
           python export_feed.py
       - name: Commit feed
         run: |

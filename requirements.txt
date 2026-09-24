@@ -1,2 +1,7 @@
-# Card builder is stdlib only (urllib + json).
-# Keep this file so the NFL-desk install step pattern still works.
+# Research stack. Daily card still runs if a scrape fails.
+pandas>=2.2,<3
+numpy>=1.26,<3
+scikit-learn>=1.5,<2
+xgboost>=2.1,<3
+pybaseball>=2.2,<3
+joblib>=1.4,<2

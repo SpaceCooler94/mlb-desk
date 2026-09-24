@@ -2,13 +2,13 @@ name: daily-card
 
 on:
   schedule:
-    # 08:30 CT — morning slate + probable SPs
+    # 08:30 CT — morning slate + probable SPs + Savant refresh
     - cron: "30 13 * * *"
     # 11:30 CT — noon card (LIVE if starters are named)
     - cron: "30 16 * * *"
     # 18:30 CT — lock remaining first pitches
     - cron: "30 23 * * *"
-    # 01:30 CT — grade last night's boxes
+    # 01:30 CT — grade last night's boxes + append history
     - cron: "30 6 * * *"
   workflow_dispatch:
     inputs:
@@ -32,15 +32,28 @@ permissions:
 jobs:
   card:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: pip
+      - name: Install stack
+        run: pip install -r requirements.txt
+      - uses: actions/cache@v4
+        with:
+          path: |
+            data
+            models
+          key: mlb-stack-${{ github.ref_name }}
+          restore-keys: |
+            mlb-stack-
       - name: Unit tests
         working-directory: python
-        run: python test_build_day.py
+        run: |
+          python test_build_day.py
+          python test_stack.py
       - name: Build slate
         working-directory: python
         run: |
@@ -55,7 +68,7 @@ jobs:
         run: |
           git config user.name "mlb-desk-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add feed/current.json
+          git add feed/current.json feed/history.jsonl data models
           git diff --cached --quiet && echo "no card change" && exit 0
           DATE=$(python -c "import json; print(json.load(open('feed/current.json')).get('date'))")
           PHASE=$(python -c "import json; print(json.load(open('feed/current.json')).get('phase','card'))")

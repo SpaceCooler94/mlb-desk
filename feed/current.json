@@ -4,7 +4,7 @@
   "status": "LOCKED",
   "card_type": "player_props",
   "layout": "xdesk-sheet",
-  "generated_at": "2026-10-01T21:09:03Z",
+  "generated_at": "2026-10-02T02:29:34Z",
   "timezone": "America/Chicago",
   "disclaimer": "2026-10-01 slate from MLB Stats API. 1/1 starters named. 1/1 lineup cards posted. Props are LOCKED \u2014 pitcher K/outs from K/9 x IP x park; batter hits/TB/HR from slot PA x rates x opponent ERA x park. Not tickets. Engines this card: rate.",
   "source": "mlb-desk",
@@ -24,12 +24,12 @@
       "home_sp": "Ray Kerr",
       "away_sp_id": 605400,
       "home_sp_id": 678061,
-      "state": "Pre-Game",
-      "abstract": "Preview",
+      "state": "In Progress",
+      "abstract": "Live",
       "lineup_tag": "CONFIRMED",
       "weather": {
-        "condition": "Clear",
-        "temp": "79",
+        "condition": "Partly Cloudy",
+        "temp": "84",
         "wind": "5 mph, L To R"
       },
       "looks": [
